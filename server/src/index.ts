@@ -1,10 +1,16 @@
 import express from 'express';
-import auth from './routes/auth';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import "reflect-metadata"
+import { validateAuthToken } from './middlewares/auth';
 
 import { AppDataSource } from './db/data-source';
+
+// Routes
+import auth from './routes/auth';
+import user from './routes/user';
+import symptom from './routes/symptom';
+import disease from './routes/disease';
 
 AppDataSource.initialize()
     .then(() => {
@@ -25,6 +31,11 @@ app.get('/', (req: any, res: any) => {
 });
 
 app.use('/auth', auth);
+app.use('/users', validateAuthToken, user);
+
+// Routes to add symptoms and diseases (only for testing/admins)
+app.use('/symptoms', symptom);
+app.use('/diseases', disease);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

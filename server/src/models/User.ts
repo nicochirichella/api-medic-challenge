@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable } from "typeorm"
+import { Diagnosis } from "./Diagnosis"
 
 type UserDto = {
     id?: number,
@@ -28,11 +29,14 @@ export class User {
     @Column()
     password: string
 
+    @OneToMany(() => Diagnosis, diagnosis => diagnosis.user)
+    @JoinTable()
+    diagnoses: Diagnosis[]
+
     constructor(userDto: UserDto) {
         this.name = userDto?.name || '';
         this.lastName = userDto?.lastName || '';
         this.email = userDto?.email || '';
-        this.id = 0;
         this.password = userDto?.password || '';
     }
 

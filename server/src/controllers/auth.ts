@@ -5,6 +5,21 @@ import { ValidationException } from '../exceptions/validationException';
 import { UserNotFoundException } from '../exceptions/userNotFoundException';
 import { registerUser, loginUser } from "../services/user";
 import { encryptPassword } from "../utils/helper";
+import jwt from 'jsonwebtoken';
+import config from '../config';
+
+const generateAuthResponse = (user: User) => {
+    const token = jwt.sign({ id: user.id }, config.JWT_KEY as string , { expiresIn: '1h' });
+    return {
+        token,
+        user: {
+            id: user.id,
+            name: user.name,
+            lastName: user.lastName,
+            email: user.email,
+        },
+    };
+};
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -20,16 +35,11 @@ export const register = async (req: Request, res: Response) => {
         )
 
         const user = await registerUser(newUser);
+        const data = generateAuthResponse(user);
         res.status(201).json({
             msg: 'User created successfully',
-            user: {
-                id: user.id,
-                name: user.name,
-                lastName: user.lastName,
-                email: user.email,
-            }
+            data   
         });
-
     } catch (error) {
         if (error instanceof ValidationException) {
             return res.status(400).json({
@@ -48,14 +58,11 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const user = await loginUser(email, password);
+
+        const data = generateAuthResponse(user);
         res.status(200).json({
             msg: 'User logged in successfully',
-            user: {
-                id: user.id,
-                name: user.name,
-                lastName: user.lastName,
-                email: user.email,
-            }
+            data
         });
     } catch (error) {
         if (error instanceof ValidationException) {
