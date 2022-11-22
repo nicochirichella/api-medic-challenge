@@ -8,4 +8,3 @@ router.post('/register', validateRegisterFields, register);
 router.post('/login', login);
 
 export default router;
-

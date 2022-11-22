@@ -1,24 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
-import { Symptom } from "./Symptom";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { Symptom } from './Symptom';
 
 @Entity()
 export class Disease {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @Column()
-    description: string
+  @Column()
+  description: string;
 
-    @ManyToMany(() => Symptom, { cascade: true })
-    @JoinTable()
-    symptoms: Symptom[]
+  @ManyToMany(() => Symptom, { cascade: true })
+  @JoinTable()
+  symptoms: Symptom[];
 
-    constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
-    }
-
+  constructor(name: string, description: string) {
+    this.name = name;
+    this.description = description;
+  }
 }

@@ -1,19 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Symptom {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @Column()
-    description: string
+  @Column()
+  description: string;
 
-    constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
-    }
-
+  constructor(name: string, description: string) {
+    this.name = name;
+    this.description = description;
+  }
 }

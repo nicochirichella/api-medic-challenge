@@ -1,5 +1,10 @@
-import { Router } from "express";
-import { addDisease, getDisease, getDiseases, addSymptomToDisease } from "../controllers/disease";
+import { Router } from 'express';
+import {
+  addDisease,
+  getDisease,
+  getDiseases,
+  addSymptomToDisease,
+} from '../controllers/disease';
 
 const router = Router();
 

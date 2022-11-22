@@ -1,5 +1,8 @@
 import Router from 'express';
-import { getDiagnosisForUser, createDiagnosisForUser } from '../controllers/user';
+import {
+  getDiagnosisForUser,
+  createDiagnosisForUser,
+} from '../controllers/user';
 
 const router = Router();
 

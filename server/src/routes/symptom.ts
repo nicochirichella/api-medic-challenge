@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { addSymptom } from "../controllers/symptom";
+import { Router } from 'express';
+import { addSymptom } from '../controllers/symptom';
 
 const router = Router();
 

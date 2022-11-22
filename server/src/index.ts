@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import "reflect-metadata"
+import 'reflect-metadata';
 import { validateAuthToken } from './middlewares/auth';
+import logger from './utils/logger';
 
 import { AppDataSource } from './db/data-source';
 
@@ -14,10 +15,10 @@ import disease from './routes/disease';
 import diagnosis from './routes/diagnosis';
 
 AppDataSource.initialize()
-    .then(() => {
-        // here you can start to work with your database
-    })
-    .catch((error) => console.log(error))
+  .then(() => {
+    // here you can start to work with your database
+  })
+  .catch((error) => logger.error(error));
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -28,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req: any, res: any) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 app.use('/auth', auth);
@@ -40,6 +41,5 @@ app.use('/symptoms', symptom);
 app.use('/diseases', disease);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
-
