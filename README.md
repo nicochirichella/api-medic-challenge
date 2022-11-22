@@ -1,8 +1,9 @@
 # api-medic-challenge
 
 To run this api you need to run commands:
-<!-- So far docker only contains db, but it could also dockerize server api -->
 - docker-compose up 
+
+<!-- Also you can run it manually by starting the server, first you need to open a pg connection in your localhost with credentials -->
 - cd server
 - nvm use
 - yarn install
