@@ -11,6 +11,7 @@ import auth from './routes/auth';
 import user from './routes/user';
 import symptom from './routes/symptom';
 import disease from './routes/disease';
+import diagnosis from './routes/diagnosis';
 
 AppDataSource.initialize()
     .then(() => {
@@ -32,6 +33,7 @@ app.get('/', (req: any, res: any) => {
 
 app.use('/auth', auth);
 app.use('/users', validateAuthToken, user);
+app.use('/diagnosis', validateAuthToken, diagnosis);
 
 // Routes to add symptoms and diseases (only for testing/admins)
 app.use('/symptoms', symptom);
