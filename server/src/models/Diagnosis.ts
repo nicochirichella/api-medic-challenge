@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable } from "typeorm";
 import { Disease } from "./Disease";
 import { User } from "./User";
 
@@ -10,19 +10,14 @@ export class Diagnosis {
     @Column()
     diagnosisDate: Date
 
-    @Column()
-    correctDiagnosis: boolean
-
-    @ManyToMany(() => Disease)
-    @JoinTable()
-    diseases: Disease[]
+    @ManyToOne(() => Disease)
+    disease: Disease
 
     @ManyToOne(() => User, user => user.diagnoses)
     user: User
 
     constructor(diagnosisDate: Date) {
         this.diagnosisDate = diagnosisDate;
-        this.correctDiagnosis = false;
     }
 
 }

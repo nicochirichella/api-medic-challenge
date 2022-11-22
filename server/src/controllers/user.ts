@@ -15,9 +15,49 @@ export const getDiagnosisForUser = async (req: Request, res: Response) => {
     if (user) {
         const diagnosis = await DiagnosisRepository.find({
             where: { user: user },
+            relations: ["disease"],
         });
+
+        const response = diagnosis.map((d) => {
+            return {
+                id: d.id,
+                diagnosisDate: d.diagnosisDate,
+                disease: d.disease.name,
+            };
+        });
+
         res.status(200).json({
             msg: 'Diagnosis for user',
+            data: JSON.stringify(response),
+        });
+    } else {
+        res.status(404).json({
+            msg: 'User not found',
+        });
+    }
+}
+
+export const createDiagnosisForUser = async (req: Request, res: Response) => {
+    const DiagnosisRepository = AppDataSource.getRepository(Diagnosis);
+    const UserRepository = AppDataSource.getRepository(User);
+    const DiseaseRepository = AppDataSource.getRepository(Disease);
+
+    const userId: number = parseInt(req.params.id);
+    const user = await UserRepository.findOne({
+        where: { id: userId },
+    });
+    if (user) {
+        const diagnosis = new Diagnosis(new Date());
+        diagnosis.user = user;
+        const diseaseIds = req.body.diseaseIds;
+        const disease = await DiseaseRepository.findOneOrFail({
+            where: { id: diseaseIds },
+        });
+
+        diagnosis.disease = disease;
+        await DiagnosisRepository.save(diagnosis);
+        res.status(200).json({
+            msg: 'Diagnosis created',
             data: JSON.stringify(diagnosis),
         });
     } else {
@@ -26,3 +66,4 @@ export const getDiagnosisForUser = async (req: Request, res: Response) => {
         });
     }
 }
+
