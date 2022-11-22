@@ -4,7 +4,7 @@ import { addDisease, getDisease, getDiseases, addSymptomToDisease } from "../con
 const router = Router();
 
 router.get('/', getDiseases);
-router.post('/add', addDisease);
+router.post('/', addDisease);
 router.get('/:id', getDisease);
 router.post('/add-symptom', addSymptomToDisease);
 

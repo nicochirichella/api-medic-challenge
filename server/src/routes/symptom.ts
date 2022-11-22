@@ -3,6 +3,6 @@ import { addSymptom } from "../controllers/symptom";
 
 const router = Router();
 
-router.post('/add', addSymptom);
+router.post('/', addSymptom);
 
 export default router;
